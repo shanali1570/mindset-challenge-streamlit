@@ -1,8 +1,17 @@
 import streamlit as st
 import spacy
+from spacy.cli import download
 from textblob import TextBlob
 import random
 import speech_recognition as sr
+
+
+# Download the model if not already installed
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 # Load spaCy model for NLP
 nlp = spacy.load("en_core_web_sm")
