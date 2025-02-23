@@ -1,17 +1,7 @@
 import streamlit as st
 import spacy
-from spacy.cli import download
 from textblob import TextBlob
 import random
-import speech_recognition as sr
-
-
-# Download the model if not already installed
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    download("en_core_web_sm")
-    nlp = spacy.load("en_core_web_sm")
 
 # Load spaCy model for NLP
 nlp = spacy.load("en_core_web_sm")
@@ -58,23 +48,9 @@ def evaluate_response(response):
 
     return feedback
 
-# Function to record voice input (using SpeechRecognition)
-def record_audio():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        st.write("Speak your answer...")
-        audio = recognizer.listen(source)
-        try:
-            text = recognizer.recognize_google(audio)
-            return text
-        except sr.UnknownValueError:
-            return "Sorry, I couldn't understand the audio."
-        except sr.RequestError:
-            return "Sorry, there was an error with the speech recognition service."
-
 # Streamlit UI for the interview simulation
 def interview_simulation():
-    st.title("Job Interview Simulation")
+    st.title("Job Interview Simulation created by Shan-e-Ali")
     st.write("Welcome to the Job Interview Simulation. Prepare for common interview questions and get feedback!")
 
     # Select a random interview question
@@ -90,13 +66,6 @@ def interview_simulation():
             st.write(f"**Feedback**: {feedback}")
         else:
             st.write("Please provide an answer.")
-
-    # Button for voice input
-    if st.button("Record Answer (Voice)"):
-        voice_response = record_audio()
-        st.write("You said: ", voice_response)
-        feedback = evaluate_response(voice_response)
-        st.write(f"**Feedback**: {feedback}")
 
     st.write("Try again to get feedback on your next answer!")
 
